@@ -50,10 +50,10 @@ Date	Start	End	Via	Miles	People	Mode
 7/22/2015	Brawley, CA	Julian, CA		75	Daven	bicycle
 7/23/2015	Julian, CA	El Cajon, CA		50	Daven	bicycle
 7/24/2015	El Cajon, CA	San Diego, CA		36	Daven	bicycle
-6/25/2008	Charlotte	Denver			Neil	fly
-6/25/2008	Denver 	Billings, MT			Neil	fly
-7/10/2008	Charlotte	Skokie		781	Baa, Dada, Neha, Roshan	drive
-7/12/2008	Skokie	Sioux Falls, SD		567	Baa, Dada, Neha, Roshan, Kris, Swati	drive
+6/25/2008	Charlotte, NC	Denver, IL			Neil	fly
+6/25/2008	Denver, CO	Billings, MT			Neil	fly
+7/10/2008	Charlotte, NC	Skokie, IL		781	Baa, Dada, Neha, Roshan	drive
+7/12/2008	Skokie, IL	Sioux Falls, SD		567	Baa, Dada, Neha, Roshan, Kris, Swati	drive
 7/13/2008	Sioux Falls, SD	Rapid City, SD		348	Baa, Dada, Neha, Roshan, Kris, Swati	drive
 7/14/2008	Rapid City, SD	Mt. Rushmore		25	Baa, Dada, Neha, Roshan, Kris, Swati	drive
 7/15/2008	Rapid City, SD	Billings, MT		405	Baa, Dada, Neha, Roshan, Kris, Swati	drive
@@ -78,6 +78,6 @@ Date	Start	End	Via	Miles	People	Mode
 8/3/2008	Denver, CO	San Francisco, CA			Chandra	fly
 8/3/2008	Denver, CO	Charlotte, NC			Roshan, Smita, Bob	fly
 8/4/2008	Skokie, IL	St. Louis, MO			Swati	drive
-8/4/2008	Topeka, KS	St. Louis, MO			Baa, Dada, Neha, Kris, Neil, Daven, Maya	drive
-8/5/2008	St. Louis, MO	Charlotte, NC			Baa, Dada, Neha, Kris, Neil, Daven, Maya	drive
-8/5/2008	St. Louis, MO	Skokie, IL				
+8/4/2008	Topeka, KS	St. Louis, MO			Baa, Dada, Neha, Neil, Kris, Daven, Maya	drive
+8/5/2008	St. Louis, MO	Charlotte, NC			Baa, Dada, Neha, Neil, Daven, Maya	drive
+8/5/2008	St. Louis, MO	Skokie, IL			Swati, Kris	drive
