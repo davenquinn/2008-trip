@@ -3,11 +3,11 @@
 from click import echo, style, secho
 from pandas import DataFrame, Series, read_pickle, concat, merge, isnull
 from geopy.geocoders import GoogleV3
-from IPython import embed
+from directions import Google
 
 locations_cache = 'data/locations.pickle'
 
-segments = DataFrame.from_csv('data/segments.tsv', index_col=None, sep='\t')
+segments = DataFrame.from_csv('data/segments-test.tsv', index_col=None, sep='\t')
 segments.columns = segments.columns.str.strip().str.lower()
 # Process segments
 segments["people"] = segments["people"].str.split(',').tolist()
@@ -53,7 +53,18 @@ locations.to_pickle(locations_cache)
 def apply_geocode(val):
     return [locations.ix[i].geocode for i in val]
 
-segments['waypoints'] = segments['locations'].apply(apply_geocode)
+api = Google()
+def get_route(row):
+    if row['mode'] == 'drive':
+        a = style(row.start,fg='cyan')
+        b = style(row.end, fg='cyan')
+        echo("Getting directions from "+a+" to "+b+".")
+        route = api.route(row.geocode)
+        row['geocode'] = route.coords
+    return row
+
+segments['geocode'] = segments['locations'].apply(apply_geocode)
+segments = segments.apply(get_route, axis=1)
 
 def properties(row):
     fields = ('mode','n_people','date','people','start','end','miles')
@@ -62,7 +73,7 @@ def properties(row):
 props = segments.apply(properties, axis=1)
 props.name = 'properties'
 df = DataFrame(props)
-df['geometry'] = segments['waypoints'].apply(lambda x: dict(
+df['geometry'] = segments['geocode'].apply(lambda x: dict(
     coordinates=x,type='LineString'))
 df['type'] = 'Feature'
 
