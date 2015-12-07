@@ -7,15 +7,15 @@ from IPython import embed
 
 locations_cache = 'data/locations.pickle'
 
-segments = DataFrame.from_csv('data/segments.tsv', sep='\t')
-segments.columns = segments.columns.str.strip()
+segments = DataFrame.from_csv('data/segments.tsv', index_col=None, sep='\t')
+segments.columns = segments.columns.str.strip().str.lower()
 # Process segments
-segments["people"] = segments.pop("People").str.split(',').tolist()
+segments["people"] = segments["people"].str.split(',').tolist()
 segments["n_people"] = segments['people'].apply(lambda r: len(r))
 
 # Get all locations
 def get_locations(row):
-    return [row['Start'],row['End']]
+    return [row['start'],row['end']]
 
 segments['locations'] = segments.apply(get_locations, axis=1)
 locations = Series(segments['locations'].sum())
@@ -51,4 +51,20 @@ def apply_geocode(val):
 
 segments['geocode'] = segments['locations'].apply(apply_geocode)
 
-embed()
+def properties(row):
+    fields = ('mode','n_people','date','people','start','end','miles')
+    return {k:row[k] for k in fields}
+
+props = segments.apply(properties, axis=1)
+props.name = 'properties'
+df = DataFrame(props)
+df['geometry'] = segments['geocode'].apply(lambda x: dict(
+    coordinates=x,type='LineString'))
+df['type'] = 'Feature'
+
+s = df.to_json(orient='records')
+s = '{"type":"FeatureCollection","features":'+s+'}'
+
+with open('data/segments.json','w') as f:
+    f.write(s)
+
