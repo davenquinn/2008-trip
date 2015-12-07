@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-data/locations.pickle
+data/*.pickle
 data/segments.json
 build
 node_modules
-=======
-build
-prof
-*.egg-info
-*.html
-*.so
->>>>>>> 4377fd6f13c5ac8b0d20104113642ac3987cdb35
