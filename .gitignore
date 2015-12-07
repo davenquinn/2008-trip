@@ -1,2 +1,4 @@
 data/locations.pickle
 data/segments.json
+build
+node_modules

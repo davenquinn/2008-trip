@@ -1,0 +1,23 @@
+{
+  "name": "2008-trip",
+  "version": "1.0.0",
+  "description": "Produces a map of the Patel-Quinn cross-country trip of summer 2008",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daven Quinn",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.10.0",
+    "browserify": "^12.0.1",
+    "coffeeify": "^1.2.0",
+    "watchify": "^3.6.1"
+  },
+  "dependencies": {
+    "coffee-script": "^1.10.0",
+    "d3": "^3.5.10",
+    "datamaps-all-browserify": "^0.3.4",
+    "topojson": "^1.6.19"
+  }
+}
