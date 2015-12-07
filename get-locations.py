@@ -1,21 +1,27 @@
 #!/usr/bin/env python
 
 from click import echo, style, secho
-from pandas import DataFrame, read_pickle, concat, merge
+from pandas import DataFrame, Series, read_pickle, concat, merge
 from geopy.geocoders import GoogleV3
 from IPython import embed
 
 locations_cache = 'data/locations.pickle'
 
-df = DataFrame.from_csv('data/test.tsv', sep='\t')
-df.columns = df.columns.str.strip()
+segments = DataFrame.from_csv('data/segments.tsv', sep='\t')
+segments.columns = segments.columns.str.strip()
+# Process segments
+segments["people"] = segments.pop("People").str.split(',').tolist()
+segments["n_people"] = segments['people'].apply(lambda r: len(r))
 
 # Get all locations
-_ = df.ix[:,'Start'],df.ix[:,'End']
-_ = concat(_,axis=0).reset_index()[0]
-_.name = "Location"
-series = _.drop_duplicates()
-locations = DataFrame(index=series)
+def get_locations(row):
+    return [row['Start'],row['End']]
+
+segments['locations'] = segments.apply(get_locations, axis=1)
+locations = Series(segments['locations'].sum())
+locations.name = "Location"
+locations = locations.drop_duplicates()
+locations = DataFrame(index=locations)
 
 try:
     # Get locations from cache
@@ -40,6 +46,9 @@ locations = locations.apply(geolocate, axis=1)
 # Save to cache
 locations.to_pickle(locations_cache)
 
+def apply_geocode(val):
+    return [locations.ix[i].geocode for i in val]
+
+segments['geocode'] = segments['locations'].apply(apply_geocode)
+
 embed()
-
-
