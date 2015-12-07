@@ -17,7 +17,7 @@
   "dependencies": {
     "coffee-script": "^1.10.0",
     "d3": "^3.5.10",
-    "datamaps-all-browserify": "^0.3.4",
+    "queue-async": "^1.0.7",
     "topojson": "^1.6.19"
   }
 }
