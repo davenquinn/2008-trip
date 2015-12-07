@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from click import echo, style, secho
-from pandas import DataFrame, Series, read_pickle, concat, merge
+from pandas import DataFrame, Series, read_pickle, concat, merge, isnull
 from geopy.geocoders import GoogleV3
 from IPython import embed
 
@@ -15,7 +15,11 @@ segments["n_people"] = segments['people'].apply(lambda r: len(r))
 
 # Get all locations
 def get_locations(row):
-    return [row['start'],row['end']]
+    if not isnull(row.via):
+        via = row.via.split(';')
+    else:
+        via = []
+    return [row.start]+via+[row.end]
 
 segments['locations'] = segments.apply(get_locations, axis=1)
 locations = Series(segments['locations'].sum())
@@ -34,7 +38,7 @@ except FileNotFoundError:
 geolocator = GoogleV3()
 
 def geolocate(row):
-    if row.geocode is None:
+    if isnull(row.geocode):
         _ = style(row.name, fg='magenta')
         echo("Geolocating "+_+"...",nl=False)
         loc = geolocator.geocode(row.name)
@@ -49,7 +53,7 @@ locations.to_pickle(locations_cache)
 def apply_geocode(val):
     return [locations.ix[i].geocode for i in val]
 
-segments['geocode'] = segments['locations'].apply(apply_geocode)
+segments['waypoints'] = segments['locations'].apply(apply_geocode)
 
 def properties(row):
     fields = ('mode','n_people','date','people','start','end','miles')
@@ -58,7 +62,7 @@ def properties(row):
 props = segments.apply(properties, axis=1)
 props.name = 'properties'
 df = DataFrame(props)
-df['geometry'] = segments['geocode'].apply(lambda x: dict(
+df['geometry'] = segments['waypoints'].apply(lambda x: dict(
     coordinates=x,type='LineString'))
 df['type'] = 'Feature'
 
