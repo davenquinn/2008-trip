@@ -9,7 +9,7 @@ Date	Start	End	Via	Miles	People	Mode
 5/31/2008	Winston-Salem, NC	Taylorsville, NC		70	Daven, Neil, Bob	bicycle
 6/1/2008	Taylorsville, NC	Linville Falls, NC		54	Daven	bicycle
 6/2/2008	Linville Falls, NC	Asheville, NC		50	Daven	bicycle
-6/4/2008	Asheville, NC	Gatlinburg, TN		85	Daven	bicycle
+6/4/2008	Asheville, NC	Gatlinburg, TN	Maggie Valley, NC	85	Daven	bicycle
 6/5/2008	Gatlinburg, TN	Maryville, TN		40	Daven	bicycle
 6/8/2008	Maryville, TN	Sweetwater, TN		40	Daven	bicycle
 6/9/2008	Sweetwater, TN	Dunlap, TN		77	Daven	bicycle
@@ -48,7 +48,7 @@ Date	Start	End	Via	Miles	People	Mode
 7/20/2008	Wenden, AZ	Blythe, CA		65	Daven	bicycle
 7/21/2008	Blythe, CA	Brawley, CA		88	Daven	bicycle
 7/22/2008	Brawley, CA	Julian, CA		75	Daven	bicycle
-7/23/2008	Julian, CA	El Cajon, CA		50	Daven	bicycle
+7/23/2008	Julian, CA	El Cajon, CA	Ramona, CA	50	Daven	bicycle
 7/24/2008	El Cajon, CA	San Diego, CA		36	Daven	bicycle
 6/25/2008	Charlotte, NC	Denver, CO			Neil	fly
 6/25/2008	Denver, CO	Billings, MT			Neil	fly
@@ -58,20 +58,20 @@ Date	Start	End	Via	Miles	People	Mode
 7/13/2008	Sioux Falls, SD	Rapid City, SD		348	Baa, Dada, Neha, Roshan, Kris, Swati	drive
 7/14/2008	Rapid City, SD	Mt. Rushmore		25	Baa, Dada, Neha, Roshan, Kris, Swati	drive
 7/15/2008	Rapid City, SD	Billings, MT		405	Baa, Dada, Neha, Roshan, Kris, Swati	drive
-7/16/2008	Billings, MT	Old Faithful, Yellowstone National Park		230	Baa, Dada, Neha, Roshan, Kris, Swati, Neil	drive
+7/16/2008	Billings, MT	Old Faithful, Yellowstone National Park	Lake Yellowstone	230	Baa, Dada, Neha, Roshan, Kris, Swati, Neil	drive
 7/17/2008	Old Faithful, Yellowstone National Park	Mammoth Hot Springs		200	Baa, Dada, Neha, Roshan, Kris, Swati, Neil	drive
 7/18/2008	Old Faithful, Yellowstone National Park	Jackson, WY		198	Baa, Dada, Neha, Roshan, Kris, Swati, Neil	drive
-7/20/2008	Charlotte, NC	Salt Lake City, UT			Smita	fly
-7/20/2008	Jackson, WY	Dallas, TX			Smita	fly
-7/20/2008	Dallas, TX	Salt Lake City, UT	Garden City, UT	308	Baa, Dada, Neha, Roshan, Kris, Swati, Neil	drive
-7/21/2008	Salt Lake City, UT	Kanab, UT		395	Baa, Dada, Neha, Roshan, Kris, Neil, Smita	drive
+7/20/2008	Charlotte, NC	Dallas, TX			Smita	fly
+7/20/2008	Dallas, TX	Jackson, WY			Smita	fly
+7/20/2008	Jackson, WY	Salt Lake City, UT	Garden City, UT	308	Baa, Dada, Neha, Roshan, Kris, Swati, Neil	drive
+7/21/2008	Salt Lake City, UT	Kanab, UT	Panguitch, UT	395	Baa, Dada, Neha, Roshan, Kris, Neil, Smita	drive
 7/21/2008	Salt Lake City, UT	Chicago, IL			Swati	fly
 7/22/2008	Kanab, UT	Las Vegas, NV	Grand Canyon North Rim	364	Baa, Dada, Neha, Roshan, Kris, Neil, Smita	drive
 7/23/2008	Las Vegas, NV	San Diego, CA		332	Baa, Dada, Neha, Roshan, Kris, Neil, Smita	drive
 7/23/2008	San Francisco, CA	San Diego, CA			Chandra	fly
 7/23/2008	Charlotte, NC	San Diego, CA			Bob, Maya	fly
 7/25/2008	San Diego, CA	San Francisco, CA			Chandra	fly
-7/25/2008	San Diego 	San Francisco, CA	Pasadena; Santa Monica; Santa Barbara	552	Baa, Dada, Neha, Roshan, Kris, Neil, Daven, Smita, Bob, Maya, Chandra	drive
+7/25/2008	San Diego, CA	San Francisco, CA	Pasadena; Santa Monica; Santa Barbara	552	Baa, Dada, Neha, Roshan, Kris, Neil, Daven, Smita, Bob, Maya, Chandra	drive
 7/29/2008	San Francisco	Tahoe City		344	Baa, Dada, Neha, Roshan, Kris, Neil, Daven, Smita, Bob, Maya, Chandra	drive
 7/30/2008	Tahoe City	2000 Hidden Canyon Pkwy, Baker, NV 89311		380	Baa, Dada, Neha, Roshan, Kris, Neil, Daven, Smita, Bob, Maya, Chandra	drive
 7/31/2008	2000 Hidden Canyon Pkwy, Baker, NV 89311	Moab, UT		381	Baa, Dada, Neha, Roshan, Kris, Neil, Daven, Smita, Bob, Maya, Chandra	drive
