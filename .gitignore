@@ -2,3 +2,5 @@ data/*.pickle
 data/segments.json
 build
 node_modules
+
+config.py

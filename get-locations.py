@@ -3,12 +3,17 @@
 from click import echo, style, secho
 from pandas import DataFrame, Series, read_pickle, concat, merge, isnull
 from geopy.geocoders import GoogleV3
-from directions import Google
+from directions import Google, Mapbox
 from time import sleep
 from IPython import embed
 
+from config import MAPBOX_TOKEN
+
 locations_cache = 'data/locations.pickle'
 routes_cache = 'data/routes.pickle'
+
+magenta = lambda x: style(x, fg='magenta')
+cyan = lambda x: style(x, fg='cyan')
 
 segments = DataFrame.from_csv('data/segments.tsv', index_col=None, sep='\t')
 segments.columns = segments.columns.str.strip().str.lower()
@@ -42,7 +47,7 @@ geolocator = GoogleV3()
 
 def geolocate(row):
     if isnull(row.geocode):
-        _ = style(row.name, fg='magenta')
+        _ = magenta(row.name)
         echo("Geolocating "+_+"...",nl=False)
         loc = geolocator.geocode(row.name)
         row.geocode = (loc.longitude,loc.latitude)
@@ -71,22 +76,29 @@ except FileNotFoundError:
 
 segments = segments.join(cached_routes,rsuffix='_cached')
 
-api = Google()
+#google = Google(rate_limit_dt=2)
+mapbox = Mapbox(MAPBOX_TOKEN, rate_limit_dt=2)
 def get_route(row):
-    if row['mode'] == 'fly':
+    mode = row['mode']
+
+    if mode == 'fly':
         return row
+    elif mode == 'bicycle':
+        kwargs = dict(mode='cycling')
+    elif mode == 'drive':
+        kwargs = dict()
+
     if str(row.directions) == 'nan':
-        a = style(row['start'],fg='maroon')
-        b = style(row['end'], fg='maroon')
+        a = magenta(row['start'])
+        b = magenta(row['end'])
         echo("Getting directions from "+a+" to "+b+".")
         try:
-            route = api.route(row.geocode)[0]
+            route = mapbox.route(row.geocode)[0]
             row['directions'] = route.coords
             row['geocode'] = row['directions']
         except IndexError:
             echo("Server not responding")
             return row
-        sleep(1)
     row['geocode'] = row['directions']
     return row
 
@@ -98,20 +110,23 @@ cached_routes = DataFrame({
     index=segments.index)
 cached_routes.to_pickle(routes_cache)
 
-def properties(row):
-    fields = ('mode','n_people','date','people','start','end','miles')
-    return {k:row[k] for k in fields}
+def write_geojson(dataframe, fn):
+    def properties(row):
+        fields = ('mode','n_people','date','people','start','end','miles')
+        return {k:row[k] for k in fields}
 
-props = segments.apply(properties, axis=1)
-props.name = 'properties'
-df = DataFrame(props)
-df['geometry'] = segments['geocode'].apply(lambda x: dict(
-    coordinates=x,type='LineString'))
-df['type'] = 'Feature'
+    props = dataframe.apply(properties, axis=1)
+    props.name = 'properties'
+    df = DataFrame(props)
+    df['geometry'] = segments['geocode'].apply(lambda x: dict(
+        coordinates=x,type='LineString'))
+    df['type'] = 'Feature'
 
-s = df.to_json(orient='records')
-s = '{"type":"FeatureCollection","features":'+s+'}'
+    s = df.to_json(orient='records')
+    s = '{"type":"FeatureCollection","features":'+s+'}'
 
-with open('data/segments.json','w') as f:
-    f.write(s)
+    with open(fn,'w') as f:
+        f.write(s)
 
+write_geojson(segments[segments['mode'] == 'bicycle'], 'data/bicycle.json')
+write_geojson(segments, 'data/segments.json')
