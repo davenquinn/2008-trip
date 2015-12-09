@@ -8,7 +8,7 @@ sz = el.node().getBoundingClientRect()
 
 #Map projection
 projection = d3.geo.albersUsa()
-  .scale 1044.3916877314448
+  .scale sz.width*1.2
   .translate [sz.width / 2,sz.height / 2]
 #translate to center the map in view
 #Generate paths based on projection
@@ -30,26 +30,34 @@ queue()
       .attr class: 'map-background'
 
     usa = topojson.feature(states,states.objects.collection)
+    lower48 = usa.features.filter (d)->
+      ['Alaska','Hawaii'].indexOf(d.properties.NAME) == -1
+
     map = mapLayer.selectAll 'path'
-      .data usa.features
+      .data lower48
 
     map.enter()
       .append 'path'
       .attr
         d: path
-        'stroke-width': 0.5
-        stroke: '#aaa'
-        fill: 'white'
+        'stroke-width': 1
+        stroke: '#fff'
+        fill: '#f0f0f0'
 
     dataLayer = svg.append 'g'
 
+    # Put flights on top
+    data = geodata.features.sort (a,b)->
+      return 1 if a.properties.mode == 'fly'
+      return -1
+
     sel = dataLayer.selectAll 'path'
-      .data geodata.features
+      .data data
 
     colors =
       drive: "#e6550d"
-      fly: "#ccc"
-      bicycle: "#98df8a"
+      fly: "#aaa"
+      bicycle: "#4CB963"
 
     sel.enter()
       .append 'path'
@@ -57,7 +65,11 @@ queue()
         d: path
         stroke: (d)->
           colors[d.properties.mode]
-        'stroke-width': (d)->1+0.3*(d.properties.n_people-1)
+        'stroke-width': (d)->1.5+0.5*(d.properties.n_people-1)
         'stroke-linecap': 'round'
+        'stroke-dasharray': (d)->
+          return null if d.properties.mode != 'fly'
+          return '5, 4'
+        'stroke-dashadjust': 'compress'
         fill: 'none'
 
